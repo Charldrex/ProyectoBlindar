@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Container(
               height: _headerHeight,
-              child: HeaderWidget(_headerHeight, true, Icons.login_rounded),
+              child: HeaderWidget(_headerHeight, true, Icons.login),
             ),
             SafeArea(
               child: Container(
@@ -31,12 +31,12 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Text(
-                      'Hello',
+                      'Blindar Security',
                       style:
-                          TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Registrate con tu cuenta',
+                      'Regístrate con tu cuenta',
                       style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 30.0),
@@ -46,15 +46,13 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           TextField(
                             decoration: ThemeHelper().textInputDecoration(
-                                'Ingrese correo electronico',
-                                'Correo electronico'),
+                                'Ingrese correo electrónico'),
                           ),
-                          SizedBox(height: 30.0),
+                          SizedBox(height: 20.0),
                           TextField(
-                            obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
-                                'Ingrese contraseña', 'Contraseña'),
-                          ),
+                              obscureText: true,
+                              decoration: ThemeHelper()
+                                  .textInputDecoration('Ingrese contraseña')),
                           SizedBox(height: 15.0),
                           Container(
                             margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
@@ -81,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Container(
                             margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                            child: Text('No tienes cuenta? Registrate!'),
+                            child: Text('No tienes cuenta? Regístrate!'),
                           ),
                         ],
                       ),

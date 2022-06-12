@@ -9,8 +9,8 @@ void main() {
 
 class Login extends StatelessWidget {
   // ignore: prefer_final_fields
-  Color _primaryColor = HexColor('#DC54FE');
-  Color _accentColor = HexColor('#8A02AE');
+  Color _primaryColor = HexColor('#6BDF40');
+  Color _accentColor = HexColor('#00a311');
 
   // This widget is the root of your application.
   @override

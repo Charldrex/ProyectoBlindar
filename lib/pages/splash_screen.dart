@@ -58,23 +58,9 @@ class _SplashScreenState extends State<SplashScreen> {
             width: 140.0,
             child: Center(
               child: ClipOval(
-                child: Icon(
-                  Icons.android_outlined,
-                  size: 128,
-                ), //Agregar logo
+                child: Image.asset('icon/icon_blindar1.png'), //Agregar logo
               ),
             ),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 2.0,
-                    offset: Offset(5.0, 3.0),
-                    spreadRadius: 2.0,
-                  )
-                ]),
           ),
         ),
       ),
