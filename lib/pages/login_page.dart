@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_blindar/common/theme_helper.dart';
 import 'package:proyecto_blindar/pages/profile_page.dart';
+import 'package:proyecto_blindar/pages/registration_page.dart';
 import 'widgets/header_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -85,7 +87,20 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Container(
                             margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                            child: Text('No tienes cuenta? Regístrate!'),
+                            // child: Text('No tienes cuenta? Regístrate!'),
+                            child: Text.rich(TextSpan(children: [
+                              TextSpan(text: "No tienes cuenta?"),
+                              TextSpan(
+                                  text: 'Crear',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  RegistrationPage()));
+                                    })
+                            ])),
                           ),
                         ],
                       ),
