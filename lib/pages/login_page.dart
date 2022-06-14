@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_blindar/common/theme_helper.dart';
+import 'package:proyecto_blindar/pages/profile_page.dart';
 import 'widgets/header_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -74,7 +75,12 @@ class _LoginPageState extends State<LoginPage> {
                                       color: Colors.white),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProfilePage()));
+                              },
                             ),
                           ),
                           Container(
