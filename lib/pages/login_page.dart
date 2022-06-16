@@ -88,19 +88,27 @@ class _LoginPageState extends State<LoginPage> {
                           Container(
                             margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
                             // child: Text('No tienes cuenta? Regístrate!'),
-                            child: Text.rich(TextSpan(children: [
-                              TextSpan(text: "No tienes cuenta?"),
+                            child: Text.rich(
                               TextSpan(
-                                  text: 'Crear',
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RegistrationPage()));
-                                    })
-                            ])),
+                                children: [
+                                  TextSpan(text: "No tienes cuenta?"),
+                                  TextSpan(
+                                    text: 'Crear',
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RegistrationPage()));
+                                      },
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context).accentColor),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
