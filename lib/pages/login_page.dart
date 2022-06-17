@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_blindar/common/theme_helper.dart';
+import 'package:proyecto_blindar/pages/Forgot_password_page.dart';
 import 'package:proyecto_blindar/pages/profile_page.dart';
 import 'package:proyecto_blindar/pages/registration_page.dart';
 import 'widgets/header_widget.dart';
@@ -60,7 +61,20 @@ class _LoginPageState extends State<LoginPage> {
                           Container(
                             margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                             alignment: Alignment.topRight,
-                            child: Text('Olvidaste tu contraseña'),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ForgotPasswordPage()),
+                                );
+                              },
+                              child: Text(
+                                "Olvidaste tu contraseña",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
                           ),
                           Container(
                             decoration:
