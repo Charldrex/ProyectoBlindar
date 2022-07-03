@@ -117,29 +117,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.screen_lock_landscape_outlined,
-                    size: _drawerIconSize,
-                    color: Theme.of(context).accentColor),
-                title: Text(
-                  'Splash Screen',
-                  style: TextStyle(
-                      fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              SplashScreen(title: "Splash Screen")));
-                },
-              ),
-              ListTile(
                 leading: Icon(Icons.login_rounded,
                     size: _drawerIconSize,
                     color: Theme.of(context).accentColor),
                 title: Text(
-                  'Login Page',
+                  'Ingresar',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
                       color: Theme.of(context).accentColor),
@@ -158,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     size: _drawerIconSize,
                     color: Theme.of(context).accentColor),
                 title: Text(
-                  'Registration Page',
+                  'Registrarse',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
                       color: Theme.of(context).accentColor),
@@ -179,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     size: _drawerIconSize,
                     color: Theme.of(context).accentColor),
                 title: Text(
-                  'Forgot Password Page',
+                  'Olvidaste tu contraseña',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
                       color: Theme.of(context).accentColor),
@@ -222,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     size: _drawerIconSize,
                     color: Theme.of(context).accentColor),
                 title: Text(
-                  'Logout',
+                  'Salir',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
                       color: Theme.of(context).accentColor),

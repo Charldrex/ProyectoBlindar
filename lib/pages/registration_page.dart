@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:proyecto_blindar/common/theme_helper.dart';
+import 'package:proyecto_blindar/pages/login_page.dart';
 import 'package:proyecto_blindar/pages/widgets/header_widget.dart';
 
 import 'profile_page.dart';
@@ -18,6 +20,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
+
+  final TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  final Color eyeColor = Color.fromARGB(255, 101, 224, 105);
+  bool visiblePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +88,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         Container(
                           child: TextFormField(
                             decoration: ThemeHelper()
-                                .textInputDecoration('Primer Nombre'),
+                                .textInputDecoration('Nombre y Apellidos'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
@@ -90,8 +102,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper()
-                                .textInputDecoration('Primer Apellido'),
+                            decoration: ThemeHelper().textInputDecoration(
+                                'Tipo', 'Ej: Usuario, Tecnico, Administrador'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
@@ -105,7 +117,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               if (!(val!.isEmpty) &&
                                   !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
                                       .hasMatch(val)) {
-                                return "Enter a valid email address";
+                                return "Correo electronico invalido";
                               }
                               return null;
                             },
@@ -131,60 +143,43 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
-                            obscureText: true,
-                            decoration: ThemeHelper()
-                                .textInputDecoration("Contraseña*"),
+                            obscureText: visiblePassword,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              label: const Text("Contraseña"),
+                              suffixIcon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    child: Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: !visiblePassword
+                                          ? eyeColor
+                                          : Colors.black54,
+                                    ),
+                                    onTap: () {
+                                      if (visiblePassword) {
+                                        visiblePassword = false;
+                                        setState(() {});
+                                        return;
+                                      }
+                                      visiblePassword = true;
+                                      setState(() {});
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
                             validator: (val) {
                               if (val!.isEmpty) {
-                                return "Please enter your password";
+                                return "Llene el campo vacio";
                               }
                               return null;
                             },
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 15.0),
-                        FormField<bool>(
-                          builder: (state) {
-                            return Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Checkbox(
-                                        value: checkboxValue,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            checkboxValue = value!;
-                                            state.didChange(value);
-                                          });
-                                        }),
-                                    Text(
-                                      "I accept all terms and conditions.",
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    state.errorText ?? '',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Theme.of(context).errorColor,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                          validator: (value) {
-                            if (!checkboxValue) {
-                              return 'You need to accept terms and conditions';
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
                         SizedBox(height: 20.0),
                         Container(
@@ -196,7 +191,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               padding:
                                   const EdgeInsets.fromLTRB(40, 10, 40, 10),
                               child: Text(
-                                "Register".toUpperCase(),
+                                "Registrarse".toUpperCase(),
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -214,91 +209,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             },
                           ),
                         ),
-                        SizedBox(height: 30.0),
-                        Text(
-                          "Or create account using social media",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        SizedBox(height: 25.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              child: FaIcon(
-                                FontAwesomeIcons.googlePlus,
-                                size: 35,
-                                color: HexColor("#EC2D2F"),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ThemeHelper().alartDialog(
-                                          "Google Plus",
-                                          "You tap on GooglePlus social icon.",
-                                          context);
+                        Container(
+                          margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                          // child: Text('No tienes cuenta? Regístrate!'),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(text: "Ya tienes cuenta?"),
+                                TextSpan(
+                                  text: 'Ingresa',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()));
                                     },
-                                  );
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              width: 30.0,
-                            ),
-                            GestureDetector(
-                              child: Container(
-                                padding: EdgeInsets.all(0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                      width: 5, color: HexColor("#40ABF0")),
-                                  color: HexColor("#40ABF0"),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).accentColor),
                                 ),
-                                child: FaIcon(
-                                  FontAwesomeIcons.twitter,
-                                  size: 23,
-                                  color: HexColor("#FFFFFF"),
-                                ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ThemeHelper().alartDialog(
-                                          "Twitter",
-                                          "You tap on Twitter social icon.",
-                                          context);
-                                    },
-                                  );
-                                });
-                              },
+                              ],
                             ),
-                            SizedBox(
-                              width: 30.0,
-                            ),
-                            GestureDetector(
-                              child: FaIcon(
-                                FontAwesomeIcons.facebook,
-                                size: 35,
-                                color: HexColor("#3E529C"),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ThemeHelper().alartDialog(
-                                          "Facebook",
-                                          "You tap on Facebook social icon.",
-                                          context);
-                                    },
-                                  );
-                                });
-                              },
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),

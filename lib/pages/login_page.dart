@@ -15,7 +15,17 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  final Color eyeColor = Color.fromARGB(255, 101, 224, 105);
+  bool visiblePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Regístrate con tu cuenta',
+                      'Ingresa con tu cuenta',
                       style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 30.0),
@@ -48,15 +58,59 @@ class _LoginPageState extends State<LoginPage> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          TextField(
-                            decoration: ThemeHelper().textInputDecoration(
-                                'Ingrese correo electrónico'),
+                          TextFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                label: const Text("Correo electronico")),
+                            validator: (val) {
+                              if (!(val!.isEmpty) &&
+                                  !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                      .hasMatch(val)) {
+                                return "Correo electronico invalido";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(height: 20.0),
-                          TextField(
-                              obscureText: true,
-                              decoration: ThemeHelper()
-                                  .textInputDecoration('Ingrese contraseña')),
+                          TextFormField(
+                            obscureText: visiblePassword,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              label: const Text("Contraseña"),
+                              suffixIcon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    child: Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: !visiblePassword
+                                          ? eyeColor
+                                          : Colors.black54,
+                                    ),
+                                    onTap: () {
+                                      if (visiblePassword) {
+                                        visiblePassword = false;
+                                        setState(() {});
+                                        return;
+                                      }
+                                      visiblePassword = true;
+                                      setState(() {});
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Llene el campo vacio";
+                              }
+                              return null;
+                            },
+                          ),
                           SizedBox(height: 15.0),
                           Container(
                             margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
@@ -84,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                                 child: Text(
-                                  'Registrarse'.toUpperCase(),
+                                  'Ingresar'.toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -92,10 +146,12 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProfilePage()));
+                                if (_formKey.currentState!.validate()) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => ProfilePage()),
+                                      (Route<dynamic> route) => false);
+                                }
                               },
                             ),
                           ),
